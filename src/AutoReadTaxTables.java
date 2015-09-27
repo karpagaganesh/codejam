@@ -1,33 +1,3 @@
-/*
- * $Header$
- * $Revision: 1.2 $
- * $Date$
- * ====================================================================
- *
- *  Copyright 2002-2004 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- * ====================================================================
- *
- * This software consists of voluntary contributions made by many
- * individuals on behalf of the Apache Software Foundation.  For more
- * information on the Apache Software Foundation, please see
- * .
- *
- * [Additional notices, if required by prior licensing conditions]
- *
- */
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -37,21 +7,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.MultipartPostMethod;
 
 public class AutoReadTaxTables{
 
@@ -73,7 +35,6 @@ public class AutoReadTaxTables{
 
         private File targetFile;
         private JTextArea taTextResponse;
-        private DefaultComboBoxModel cmbURLModel;
         private ArrayList<String> inputFiles;
 
         public MultipartFileUploadFrame() {
@@ -88,7 +49,6 @@ public class AutoReadTaxTables{
                         public void actionPerformed(ActionEvent evt) {
                             JFileChooser chooser = new JFileChooser();
                             chooser.setFileHidingEnabled(false);
-//                            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                             chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                             chooser.setMultiSelectionEnabled(false);
                             chooser.setDialogType(JFileChooser.OPEN_DIALOG);
@@ -109,7 +69,6 @@ public class AutoReadTaxTables{
                                 else{
                                     inputFiles = new ArrayList<String>();
                                     String path = targetFile.toString()+"/";
-                                    System.out.println(path);
                                     File[] filesInDirectory = targetFile.listFiles();
                                     for ( File file : filesInDirectory ) {
                                         String fileName = file.getName().toString();
@@ -119,8 +78,6 @@ public class AutoReadTaxTables{
                                         }
                                     }
                                 }
-
-//                                System.out.println(Arrays.toString(inputFiles.toArray()));
                                 tfdTargetFile.setText(targetFile.toString());
                                 btnDoUpload.setEnabled(true);
                             }
@@ -133,7 +90,7 @@ public class AutoReadTaxTables{
 
             final JLabel lblURL = new JLabel("PDF Source:");
 
-            btnDoUpload.addActionListener(new ActionListener() {
+            btnDoUpload.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent ae) {
 
                     for(int fileIndex=0;fileIndex<inputFiles.size();fileIndex++){
@@ -141,9 +98,8 @@ public class AutoReadTaxTables{
                         try{
                             appendMessage("Converting: " + inputFiles.get(fileIndex));
                             pdf.processPDFtoCSV(inputFiles.get(fileIndex));
-                            appendMessage("Done! " + inputFiles.get(fileIndex));
                         }catch (Exception e){
-
+                            e.printStackTrace();
                         }
                     }
                 }
@@ -168,7 +124,6 @@ public class AutoReadTaxTables{
             c.gridwidth = 2;
             c.gridx = 1;
             c.insets = new Insets(5, 5, 5, 10);
-//            getContentPane().add(cmbURL, c);
 
             c.anchor = GridBagConstraints.EAST;
             c.fill = GridBagConstraints.NONE;
@@ -176,7 +131,6 @@ public class AutoReadTaxTables{
             c.gridwidth = 1;
             c.gridx = 0;
             c.gridy = 1;
-//            getContentPane().add(lblTargetFile, c);
 
             c.anchor = GridBagConstraints.CENTER;
             c.fill = GridBagConstraints.HORIZONTAL;
@@ -199,7 +153,6 @@ public class AutoReadTaxTables{
             c.gridx = 0;
             c.gridy = 2;
             getContentPane().add(btnDoUpload, c);
-
 
             c.anchor = GridBagConstraints.CENTER;
             c.fill = GridBagConstraints.BOTH;

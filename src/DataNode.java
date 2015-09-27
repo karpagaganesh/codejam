@@ -1,27 +1,15 @@
-/**
- * Created by kpatchirajan on 9/23/15.
- */
+import java.util.ArrayList;
+
 public class DataNode {
 
-    int minimumAmount;
-    int maximumAmount;
-    int single;
-    int marriedFilingJointly;
-    int marriedFilingSeparately;
-    int headOfHouseHold;
+    private ArrayList<String> csvElements = new ArrayList<>();  // Tax table entries in CSV format.
 
-    DataNode next;
+    public DataNode(ArrayList<String> elements){
+        csvElements = elements;
+    }
 
-    public DataNode(int _minimumAmount, int _maximumAmount, int _single,
-                         int _marriedFilingJointly, int _marriedFilingSeparately, int _headOfHouseHold){
-
-        minimumAmount = _minimumAmount;
-        maximumAmount = _maximumAmount;
-        single = _single;
-        marriedFilingJointly = _marriedFilingJointly;
-        marriedFilingSeparately = _marriedFilingSeparately;
-        headOfHouseHold = _headOfHouseHold;
-        next = null;
+    public ArrayList<String> getCSVElements(){
+        return csvElements;
     }
 
 }
